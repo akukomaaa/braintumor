@@ -5,6 +5,14 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras import layers, Model
 from PIL import Image
 
+import gdown
+import os
+
+MODEL_PATH = "unet_best.h5"
+if not os.path.exists(MODEL_PATH):
+    url = "https://drive.google.com/uc?id=1joX_hMp_EJgaz_wkJJ4nXHZ2N2Rh7TKA"  # ganti FILE_ID sesuai file Drive
+    gdown.download(url, MODEL_PATH, quiet=False)
+
 # === Bangun ulang arsitektur UNet ===
 def conv_block(x, filters, kernel_size=3, batch_norm=True, dropout=0.0):
     x = layers.Conv2D(filters, kernel_size, padding='same', kernel_initializer='he_normal')(x)
@@ -102,3 +110,4 @@ elif menu == "🧠 Deteksi Tumor":
             st.image(overlay, caption="Overlay Tumor", use_column_width=True)
     else:
         st.info("Silakan upload gambar untuk mulai prediksi.")
+
